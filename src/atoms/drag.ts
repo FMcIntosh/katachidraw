@@ -125,27 +125,27 @@ export const dragCanvasAtom = atom(
     }
 
     // pan mode
-    if (mode === "pan") {
-      if (action.type === "start" && !dragStart) {
-        set(dragCanvasStartAtom, {
-          canvas: {
-            x: offset.x + action.pos[0] / zoom,
-            y: offset.y + action.pos[1] / zoom,
-          },
-        });
-      } else if (action.type === "move" && dragStart) {
-        const { canvas } = dragStart;
-        if (canvas) {
-          set(offsetAtom, {
-            x: canvas.x - action.pos[0] / zoom,
-            y: canvas.y - action.pos[1] / zoom,
-          });
-        }
-      } else if (action.type === "end" && dragStart) {
-        set(dragCanvasStartAtom, null);
-      }
-      return;
-    }
+    // if (mode === "pan") {
+    //   if (action.type === "start" && !dragStart) {
+    //     set(dragCanvasStartAtom, {
+    //       canvas: {
+    //         x: offset.x + action.pos[0] / zoom,
+    //         y: offset.y + action.pos[1] / zoom,
+    //       },
+    //     });
+    //   } else if (action.type === "move" && dragStart) {
+    //     const { canvas } = dragStart;
+    //     if (canvas) {
+    //       set(offsetAtom, {
+    //         x: canvas.x - action.pos[0] / zoom,
+    //         y: canvas.y - action.pos[1] / zoom,
+    //       });
+    //     }
+    //   } else if (action.type === "end" && dragStart) {
+    //     set(dragCanvasStartAtom, null);
+    //   }
+    //   return;
+    // }
 
     // erase mode without selection
     if (mode === "erase" && !selected.size) {

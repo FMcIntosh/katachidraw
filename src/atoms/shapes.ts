@@ -13,6 +13,7 @@ type TShapeCommon = {
 export type TShapePath = TShapeCommon & {
   path: string;
   color: string;
+  isPointInShape: any;
 };
 
 export type TShapeImage = TShapeCommon & {
@@ -29,11 +30,11 @@ export const colorAtom = atom("black");
 
 export const allShapesAtom = atom<ShapeAtom[]>([]);
 
-export const addShapePathAtom = atom(null, (get, set, path: string) => {
-  const color = get(colorAtom);
-  const shape: TShapePath = { ...adjustSvgPath(path), scale: 1, color };
-  set(allShapesAtom, [...get(allShapesAtom), atom(shape) as ShapeAtom]);
-});
+// export const addShapePathAtom = atom(null, (get, set, path: string) => {
+//   const color = get(colorAtom);
+//   const shape: TShapePath = { ...adjustSvgPath(path), scale: 1, color };
+//   set(allShapesAtom, [...get(allShapesAtom), atom(shape) as ShapeAtom]);
+// });
 
 export const addShapeImageAtom = atom(null, (get, set, image: string) => {
   // TODO nicer initial position and width
@@ -54,6 +55,7 @@ export const selectedAtom = atom((get) => get(selectedShapesAtom));
 
 export const hasSelectionAtom = atom((get) => !!get(selectedShapesAtom).size);
 
+// handler for clicking on a shape
 export const selectAtom = atom(null, (get, set, shapeAtom: ShapeAtom) => {
   const mode = get(modeAtom);
   if (mode === "draw") {
@@ -75,6 +77,7 @@ export const selectAtom = atom(null, (get, set, shapeAtom: ShapeAtom) => {
   }
 });
 
+// handler for unselecting a shape, called from select Atom
 export const unselectAtom = atom(null, (get, set, shapeAtom: ShapeAtom) => {
   const selected = get(selectedShapesAtom);
   if (selected.has(shapeAtom)) {
